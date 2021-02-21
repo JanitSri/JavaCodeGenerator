@@ -1,3 +1,2 @@
 *.docx
-test.py
-er_diagram.drawio
+test*.json
