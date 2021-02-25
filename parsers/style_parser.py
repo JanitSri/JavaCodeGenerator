@@ -53,7 +53,7 @@ class StyleParser:
 
         child = next(root_children, None)
       
-      # need to process the relationships at the end to get the right target
+      # need to process the relationships at the end to get the right source and target
       for relationship in relationship_list:
         child_attrs = relationship
         self.style_tree["root"]["relationships"][child_attrs['id']] = self._add_relationships(child_attrs, self.style_tree, root_parent)

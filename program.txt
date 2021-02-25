@@ -1,0 +1,32 @@
+<<< PROGRAM TEMPLATE >>>
+{
+  id1:{
+    type: "class | interface | abstract",
+    name: ""
+    properties: {
+      id: {
+        "access": "public | private | protected"
+        "name": "",
+        "type": "",
+      }
+    },
+    methods: {
+      id: {
+        "access": "public | private | protected"
+        "name": "",
+        "return-type": "",
+      }
+    },
+    relationships: {
+      implements: [],
+      extends: []
+    }
+  }
+}
+
+
+what to look for in the relationships;
+  - some of these keys wont exist in the dictionary
+  - start arrow and start fill 
+  - end arrow and end fill
+  - dashed
