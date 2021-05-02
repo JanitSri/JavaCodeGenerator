@@ -17,6 +17,8 @@ class SyntaxParser:
       syntax_tree: the syntax tree that is used by the generators  
     """
 
+    print("<<< CONVERTING STYLE TREE TO SYNTAX TREE >>>")    
+
     try:
       syntax_tree = dict()
       cells = self.style_tree['root']['cells']
@@ -24,13 +26,13 @@ class SyntaxParser:
       parent = self.style_tree['root']['id']
 
       propertiesDone = False
+      _id = 0
 
       for key, value in cells.items():
         if value['parent_id'] == parent and value['style']['type'].lower() == 'swimlane':
           # start of a new cell 
           syntax_tree[key] = self._tree_template(value)
           propertiesDone = False
-          _id = 0
         else:
           # properties and methods in the cell 
           if value['style']['type'].lower() == 'line' and value['parent_id'] in syntax_tree.keys():  # line seperating the properties and methods
@@ -59,8 +61,14 @@ class SyntaxParser:
       template: the starting template (dictionary)
     """
 
+    class_type = "class"
+
+    if main_cell["style"]["fontStyle"] and main_cell["style"]["fontStyle"] == "2": 
+      # if the fontStyle is italic, then it is an abstract class
+      class_type = "abstract"
+
     return {
-      'type': "class | interface | abstract",
+      'type': class_type,
       "name": main_cell["values"][0] if len(main_cell["values"]) > 0 else "",
       'properties': {},
       'methods': {},

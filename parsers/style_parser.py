@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup as bs
 from collections import OrderedDict 
-import json 
+import re
 
 class StyleParser:
   """
@@ -36,7 +36,7 @@ class StyleParser:
       relationship_list = list()
 
       child = next(root_children, None)
-      while(child):
+      while child:
         child_attrs = child.attrs
 
         if "parent" in child_attrs:
@@ -46,7 +46,7 @@ class StyleParser:
           elif "source" in child_attrs and "target" in child_attrs:  # found a relationship element
             relationship_list.append(child_attrs)
           else:  # found a cell element
-            self.style_tree["root"]["cells"][child_attrs['id']] = self._add_cells(child_attrs)
+            self.style_tree["root"]["cells"][child_attrs['id']] = self._add_cells(child_attrs, root_parent)
         else:  # found the grandparent element  
           if grandparent is None:
             grandparent = child_attrs['id']
@@ -54,9 +54,8 @@ class StyleParser:
         child = next(root_children, None)
       
       # need to process the relationships at the end to get the right source and target
-      for relationship in relationship_list:
-        child_attrs = relationship
-        self.style_tree["root"]["relationships"][child_attrs['id']] = self._add_relationships(child_attrs, self.style_tree, root_parent)
+      for child_attrs in relationship_list:
+        self.style_tree["root"]["relationships"][child_attrs['id']] = self._add_relationships(child_attrs, root_parent)
 
       return self.style_tree
     except Exception as e:
@@ -81,7 +80,7 @@ class StyleParser:
       "relationships": dict()
     }
   
-  def _add_relationships(self, attrs, tree, root_parent):
+  def _add_relationships(self, attrs, root_parent):
     """
     Format dictionary for the relationships
 
@@ -96,13 +95,13 @@ class StyleParser:
 
     source = attrs["source"]
     parent_source = self.style_tree['root']['cells'][source]['parent_id']
-    while(parent_source != root_parent):
+    while parent_source != root_parent:
       source = parent_source
       parent_source = self.style_tree['root']['cells'][source]['parent_id']
     
     target = attrs["target"]
     parent_target = self.style_tree['root']['cells'][target]['parent_id']
-    while(parent_target != root_parent):
+    while parent_target != root_parent:
       target = parent_target
       parent_target = self.style_tree['root']['cells'][target]['parent_id']
 
@@ -116,38 +115,63 @@ class StyleParser:
       "style": style
     }
   
-  def _add_cells(self, attrs):
+  def _add_cells(self, attrs, root_parent):
     """
     Format dictionary for the cells
 
     Parameters:
       attrs: the cell element attributes
+      root_parent: the id of the root parent 
 
     Returns:
       cell_dict: dictionary containing id, parent_id, style, values
     """
 
     style = self._get_style(attrs['style'])
-
     value = attrs['value']
+    cell_result = {
+      "id": attrs["id"],
+      "parent_id": attrs["parent"],
+      "style": style
+    }
+
+    if "type" not in style.keys() and attrs["parent"] == root_parent: # cell design is html
+      style["type"] = "html"
+      split_values = re.sub("<hr .*?>", "\n<hr>\n", value).lstrip("\n").split("\n")
+      cell_result["values"] = [
+        self._get_text_values(bs(val, 'lxml').text) for val in split_values if val != "<hr>"
+      ]
+      cell_result["style"]["type"] = "html"
+    else:
+      cell_result["values"] = self._get_text_values(value)
+
+    
+    return cell_result
+
+  def _get_text_values(self, values):
+    """
+    Get individual values for the joined values 
+
+    Parameters:
+      values: raw values for extraction
+
+    Returns:
+      vals: list of the final values 
+    """
+
     temp_val = ""
-    final_values = []
-    for v in value:
-      if v in ['+', '-', "#"]:
+    vals = []
+    for v in values:
+      if v in ['+', '-', "#"]: 
         if temp_val:
-          final_values.append(temp_val.strip())
+          vals.append(temp_val.strip())
         temp_val = ""
       
       temp_val += v
     
-    final_values.append(temp_val.strip())
-    
-    return {
-      "id":attrs["id"],
-      "parent_id":attrs["parent"],
-      "style": style,
-      "values": final_values
-    }
+    vals.append(temp_val.strip())
+
+    return vals
 
   def _get_style(self, style_attrs):
     """
