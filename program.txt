@@ -25,7 +25,8 @@
 }
 
 TODO:
-  - determine if class, interface or abstract
+  - add HTML support in the syntax tree parser --> DONE
+  - determine if class, interface or abstract --> DONE
   - add relationships
 
 what to look for in the relationships:

@@ -42,7 +42,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "-name: String"
+                    "-name:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--2": {
@@ -63,7 +63,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "-address: Address"
+                    "-address:Address"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--3": {
@@ -84,7 +84,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "-email: String"
+                    "-email:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--4": {
@@ -123,7 +123,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "+getFullName: String"
+                    "+getFullName:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--6": {
@@ -165,7 +165,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "-studentNumber: int"
+                    "-studentNumber:int"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--8": {
@@ -186,7 +186,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "-averageMark: double"
+                    "-averageMark:double"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--9": {
@@ -226,7 +226,7 @@
                     "fontStyle": "4"
                 },
                 "values": [
-                    "+eligibleToEnroll: boolean"
+                    "+eligibleToEnroll:boolean"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--11": {
@@ -244,7 +244,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "+getSemestersTaken: int"
+                    "+getSemestersTaken:int"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--13": {
@@ -286,7 +286,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "-salary: double"
+                    "-salary:double"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--15": {
@@ -349,7 +349,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "- street: String"
+                    "-street:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--19": {
@@ -370,7 +370,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "- city: String"
+                    "-city:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--20": {
@@ -391,7 +391,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "- state: String"
+                    "-state:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--21": {
@@ -412,7 +412,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "- postalCode: String"
+                    "-postalCode:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--22": {
@@ -433,7 +433,7 @@
                     "html": "0"
                 },
                 "values": [
-                    "- country: String"
+                    "-country:String"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--23": {
@@ -472,7 +472,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "+ validate: boolean"
+                    "+validate:boolean"
                 ]
             },
             "zkfFHV4jXpPFQw0GAbJ--25": {
@@ -490,7 +490,7 @@
                     "portConstraint": "eastwest"
                 },
                 "values": [
-                    "+ toString: String"
+                    "+toString:String"
                 ]
             },
             "VqrtooUC8EQqjCm-ObJx-6": {
@@ -510,12 +510,12 @@
                         "<<Interface>>Auth"
                     ],
                     [
-                        "- userName: String",
-                        "+ password: String"
+                        "-userName:String",
+                        "+password:String"
                     ],
                     [
-                        "+ signIn: boolean",
-                        "+ signOut: boolean"
+                        "+signIn:boolean",
+                        "+signOut:boolean"
                     ]
                 ]
             }
@@ -584,15 +584,15 @@
                     "endFill": "0",
                     "endSize": "12",
                     "html": "1",
-                    "entryX": "0.532",
-                    "entryY": "1.005",
+                    "entryX": "0.5",
+                    "entryY": "0",
                     "entryDx": "0",
                     "entryDy": "0",
-                    "entryPerimeter": "0",
-                    "exitX": "0.5",
-                    "exitY": "0",
+                    "exitX": "0.815",
+                    "exitY": "1.029",
                     "exitDx": "0",
-                    "exitDy": "0"
+                    "exitDy": "0",
+                    "exitPerimeter": "0"
                 }
             }
         }

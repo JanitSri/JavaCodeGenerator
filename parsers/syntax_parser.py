@@ -26,13 +26,14 @@ class SyntaxParser:
       parent = self.style_tree['root']['id']
 
       propertiesDone = False
-      _id = 0
 
+      _id = 0
       for key, value in cells.items():
-        if value['parent_id'] == parent and value['style']['type'].lower() == 'swimlane':
+        if value['parent_id'] == parent and value['style']['type'].lower() == 'swimlane' or value['style']['type'].lower() == 'html':
           # start of a new cell 
           syntax_tree[key] = self._tree_template(value)
           propertiesDone = False
+          _id = 0
         else:
           # properties and methods in the cell 
           if value['style']['type'].lower() == 'line' and value['parent_id'] in syntax_tree.keys():  # line seperating the properties and methods
@@ -61,15 +62,9 @@ class SyntaxParser:
       template: the starting template (dictionary)
     """
 
-    class_type = "class"
-
-    if main_cell["style"]["fontStyle"] and main_cell["style"]["fontStyle"] == "2": 
-      # if the fontStyle is italic, then it is an abstract class
-      class_type = "abstract"
-
-    return {
-      'type': class_type,
-      "name": main_cell["values"][0] if len(main_cell["values"]) > 0 else "",
+    template =  {
+      'type': "class",
+      'name': main_cell['values'][0] if len(main_cell['values']) > 0 else "",
       'properties': {},
       'methods': {},
       'relationships': {
@@ -77,7 +72,27 @@ class SyntaxParser:
         'extends': []
       }
     }
-  
+
+    if main_cell['style']['type'] == "html":
+      values_length = len(main_cell['values'])
+      name = main_cell['values'][0] if values_length > 0 else None
+      properties = {'values': main_cell['values'][1] if values_length > 1 else None}
+      methods = {'values': main_cell['values'][2] if values_length > 2 else None}
+      
+      template['name'] = name[0]
+      template['properties'] = self._properties_template(properties, 0) if not None else []
+      template['methods'] = self._methods_template(methods, 0) if not None else []
+      
+
+    if "fontStyle" in main_cell['style'] and main_cell['style']['fontStyle'] == "2": 
+      # if the fontStyle is italic, then it is an abstract class
+      template['type'] = "abstract"
+    elif template['name'].lower().startswith("<<interface>>"):
+      template['type'] = "interface"
+      template['name'] = template['name'][13:]
+
+    return template
+
   def _properties_template(self, property_dict, _id):
     """
     Create the template for properties 
@@ -101,9 +116,9 @@ class SyntaxParser:
       temp_val = val[1:].split(":")
 
       template[_id] = {
-        "access": self._get_access_modifier(access_modifier_symbol),
-        "name": temp_val[0].strip(),
-        "type": temp_val[1].strip(),
+        'access': self._get_access_modifier(access_modifier_symbol),
+        'name': temp_val[0].strip(),
+        'type': temp_val[1].strip(),
       }
 
     return template
@@ -131,9 +146,9 @@ class SyntaxParser:
       temp_val = val[1:].split(":")
 
       template[_id] = {
-        "access": self._get_access_modifier(access_modifier_symbol),
-        "name": temp_val[0].strip(),
-        "return_type": temp_val[1].strip(),
+        'access': self._get_access_modifier(access_modifier_symbol),
+        'name': temp_val[0].strip(),
+        'return_type': temp_val[1].strip(),
       }
 
     return template
@@ -150,8 +165,9 @@ class SyntaxParser:
     """
 
     access_modifier_dict = {
-      "+": "public",
-      "#": "protected",
-      "-": "private"
+      '+': "public",
+      '#': "protected",
+      '-': "private"
     }
+
     return access_modifier_dict[symbol]

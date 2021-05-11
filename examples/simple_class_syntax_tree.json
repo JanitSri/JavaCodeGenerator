@@ -1,0 +1,161 @@
+{
+    "zkfFHV4jXpPFQw0GAbJ--0": {
+        "type": "abstract",
+        "name": "Person",
+        "properties": {
+            "1": {
+                "access": "private",
+                "name": "name",
+                "type": "String"
+            },
+            "2": {
+                "access": "private",
+                "name": "address",
+                "type": "Address"
+            },
+            "3": {
+                "access": "private",
+                "name": "email",
+                "type": "String"
+            }
+        },
+        "methods": {
+            "1": {
+                "access": "public",
+                "name": "getFullName",
+                "return_type": "String"
+            }
+        },
+        "relationships": {
+            "implements": [],
+            "extends": []
+        }
+    },
+    "zkfFHV4jXpPFQw0GAbJ--6": {
+        "type": "class",
+        "name": "Student",
+        "properties": {
+            "1": {
+                "access": "private",
+                "name": "studentNumber",
+                "type": "int"
+            },
+            "2": {
+                "access": "private",
+                "name": "averageMark",
+                "type": "double"
+            }
+        },
+        "methods": {
+            "1": {
+                "access": "public",
+                "name": "eligibleToEnroll",
+                "return_type": "boolean"
+            },
+            "2": {
+                "access": "public",
+                "name": "getSemestersTaken",
+                "return_type": "int"
+            }
+        },
+        "relationships": {
+            "implements": [],
+            "extends": []
+        }
+    },
+    "zkfFHV4jXpPFQw0GAbJ--13": {
+        "type": "class",
+        "name": "Professor",
+        "properties": {
+            "1": {
+                "access": "private",
+                "name": "salary",
+                "type": "double"
+            }
+        },
+        "methods": {},
+        "relationships": {
+            "implements": [],
+            "extends": []
+        }
+    },
+    "zkfFHV4jXpPFQw0GAbJ--17": {
+        "type": "class",
+        "name": "Address",
+        "properties": {
+            "1": {
+                "access": "private",
+                "name": "street",
+                "type": "String"
+            },
+            "2": {
+                "access": "private",
+                "name": "city",
+                "type": "String"
+            },
+            "3": {
+                "access": "private",
+                "name": "state",
+                "type": "String"
+            },
+            "4": {
+                "access": "private",
+                "name": "postalCode",
+                "type": "String"
+            },
+            "5": {
+                "access": "private",
+                "name": "country",
+                "type": "String"
+            }
+        },
+        "methods": {
+            "1": {
+                "access": "public",
+                "name": "validate",
+                "return_type": "boolean"
+            },
+            "2": {
+                "access": "public",
+                "name": "toString",
+                "return_type": "String"
+            }
+        },
+        "relationships": {
+            "implements": [],
+            "extends": []
+        }
+    },
+    "VqrtooUC8EQqjCm-ObJx-6": {
+        "type": "interface",
+        "name": "Auth",
+        "properties": {
+            "1": {
+                "access": "private",
+                "name": "userName",
+                "type": "String"
+            },
+            "2": {
+                "access": "public",
+                "name": "password",
+                "type": "String"
+            }
+        },
+        "methods": {
+            "1": {
+                "access": "public",
+                "name": "signIn",
+                "return_type": "boolean"
+            },
+            "2": {
+                "access": "public",
+                "name": "signOut",
+                "return_type": "boolean"
+            }
+        },
+        "relationships": {
+            "implements": [],
+            "extends": []
+        }
+    }
+}
