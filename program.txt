@@ -27,9 +27,26 @@
 TODO:
   - add HTML support in the syntax tree parser --> DONE
   - determine if class, interface or abstract --> DONE
-  - add relationships
+  - add relationships --> DONE
+  - check if the relationships are correct
+  - generate the code
 
 what to look for in the relationships:
   - start arrow and start fill 
   - end arrow and end fill
   - dashed
+
+types of relationships:
+  1) extends 
+    - endArrow: block, endFill: 0 
+  2) implements
+    - endArrow: block, endFill: 0, dashed: 1
+  3) association 
+    - endArrow: block, startArrow: block, endFill: 1, 
+    - endArrow: None
+  4) aggregation 
+    - endArrow: diamondThin, endFill: 0 
+    - startArrow: diamondThin, endFill: 0 
+  5) composition 
+    - endArrow: diamondThin, endFill: 1
+    - startArrow: diamondThin, endFill: 1

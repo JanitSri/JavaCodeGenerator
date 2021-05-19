@@ -29,6 +29,11 @@ class SyntaxParser:
 
       _id = 0
       for key, value in cells.items():
+        
+        if value['parent_id'] in relationships.keys() or "endArrow" in value['style'].keys():  
+          # skip the label for replationships
+          continue
+
         if value['parent_id'] == parent and value['style']['type'].lower() == 'swimlane' or value['style']['type'].lower() == 'html':
           # start of a new cell 
           syntax_tree[key] = self._tree_template(value)
@@ -46,6 +51,9 @@ class SyntaxParser:
             else: # methods
               syntax_tree[value['parent_id']]['methods'] = {**syntax_tree[value['parent_id']]['methods'], **self._methods_template(value, _id)}
               _id += len(value['values'])
+
+      for relationship in relationships.keys():
+        self._add_relationships(syntax_tree, relationships[relationship])
 
       return syntax_tree
     except Exception as e:
@@ -69,7 +77,10 @@ class SyntaxParser:
       'methods': {},
       'relationships': {
         'implements': [],
-        'extends': []
+        'extends': [],
+        'association': [],
+        'aggregation': [],
+        'composition': []
       }
     }
 
@@ -171,3 +182,42 @@ class SyntaxParser:
     }
 
     return access_modifier_dict[symbol]
+
+  def _add_relationships(self, syntax_tree, relationship):
+    """
+    Add the relationship for the cells in the syntax tree
+
+    Parameters:
+      syntax_tree: the syntax_tree dictionary
+      relationship: relationship to be added to the syntax tree
+    """
+    
+    source = relationship['source']
+    target = relationship['target']
+    style = relationship['style']
+
+    source_cell = syntax_tree[source]
+    target_cell = syntax_tree[target]
+
+    if "endArrow" in style.keys() and (style['endArrow'].lower() == "block" or style['endArrow'].lower() == "none"):
+      if style['endArrow'].lower() == "none" or style['endFill'].lower() == "1":
+        # association
+        target_cell['relationships']['association'] += [source]
+      elif "dashed" in style.keys() and style['dashed'] == "1":
+        # implements 
+        source_cell['relationships']['implements'] += [target]        
+      else:
+        # extends 
+        source_cell['relationships']['extends'] += [target]        
+    elif ("endArrow" in style.keys() and style['endArrow'].lower() == "diamondthin") or \
+      ("startArrow" in style.keys() and style['startArrow'].lower() == "diamondthin"):
+      if  "endFill" in style.keys() and style['endFill'] == "1":
+        # composition
+        target_cell['relationships']['composition'] += [source]        
+      else: 
+        # aggregation 
+        target_cell['relationships']['aggregation'] += [source]        
+
+
+    
+

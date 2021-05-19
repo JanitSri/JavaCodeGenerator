@@ -43,8 +43,13 @@ class StyleParser:
           if child_attrs['parent'] == grandparent:  # found the root parent element
             root_parent = child_attrs['id']
             self.style_tree['root'] = self._add_root_parent(child_attrs)
-          elif "source" in child_attrs and "target" in child_attrs:  # found a relationship element
-            relationship_list.append(child_attrs)
+          elif "source" in child_attrs or "target" in child_attrs:  # found a relationship element
+            if "source" not in child_attrs:  
+              print(f"'source' not present in {child_attrs['id']} relationship")
+            elif "target" not in child_attrs:
+              print(f"'target' not present in {child_attrs['id']} relationship")              
+            else:
+              relationship_list.append(child_attrs)
           else:  # found a cell element
             self.style_tree['root']['cells'][child_attrs['id']] = self._add_cells(child_attrs, root_parent)
         else:  # found the grandparent element  

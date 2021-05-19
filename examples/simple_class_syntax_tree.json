@@ -27,8 +27,15 @@
             }
         },
         "relationships": {
-            "implements": [],
-            "extends": []
+            "implements": [
+                "VqrtooUC8EQqjCm-ObJx-6"
+            ],
+            "extends": [],
+            "association": [],
+            "aggregation": [],
+            "composition": [
+                "zkfFHV4jXpPFQw0GAbJ--17"
+            ]
         }
     },
     "zkfFHV4jXpPFQw0GAbJ--6": {
@@ -60,7 +67,12 @@
         },
         "relationships": {
             "implements": [],
-            "extends": []
+            "extends": [
+                "zkfFHV4jXpPFQw0GAbJ--0"
+            ],
+            "association": [],
+            "aggregation": [],
+            "composition": []
         }
     },
     "zkfFHV4jXpPFQw0GAbJ--13": {
@@ -76,7 +88,12 @@
         "methods": {},
         "relationships": {
             "implements": [],
-            "extends": []
+            "extends": [
+                "zkfFHV4jXpPFQw0GAbJ--0"
+            ],
+            "association": [],
+            "aggregation": [],
+            "composition": []
         }
     },
     "zkfFHV4jXpPFQw0GAbJ--17": {
@@ -123,7 +140,10 @@
         },
         "relationships": {
             "implements": [],
-            "extends": []
+            "extends": [],
+            "association": [],
+            "aggregation": [],
+            "composition": []
         }
     },
     "VqrtooUC8EQqjCm-ObJx-6": {
@@ -155,7 +175,10 @@
         },
         "relationships": {
             "implements": [],
-            "extends": []
+            "extends": [],
+            "association": [],
+            "aggregation": [],
+            "composition": []
         }
     }
 }
