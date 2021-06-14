@@ -39,7 +39,6 @@ class JavaCodeGenerator(CodeGeneratorInterface):
                     implementation += "implements "
                     implementation += ",".join([self.__syntax_tree[r]['name'] for r in _class['relationships']['implements']]).strip(",")
 
-
                 interface_methods = list()
                 self.get_interface_methods(_class['relationships']['implements'], interface_methods)
 
@@ -140,7 +139,7 @@ class JavaCodeGenerator(CodeGeneratorInterface):
                     methods_string += getter + "\n"
                     self.__methods.append(getter)
 
-                    setter = (f"\tpublic void set{_property_value['name'].capitalize()}({_property_value['type']} {_property_value['name']})"
+                    setter = (f"\tpublic void set{_property_value['name'][0].upper() + _property_value['name'][1:]}({_property_value['type']} {_property_value['name']})"
                               f" {{\n \t\tthis.{_property_value['name']} = {_property_value['name']}; \n\t}}\n")
                     methods_string += setter + "\n"
                     self.__methods.append(setter)

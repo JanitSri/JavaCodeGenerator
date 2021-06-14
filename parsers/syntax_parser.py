@@ -165,7 +165,7 @@ class SyntaxParser:
       template[_id] = {
         'access': self._get_access_modifier(access_modifier_symbol),
         'name': temp_val[0].strip(),
-        'return_type': temp_val[1].strip(),
+        'return_type': temp_val[1].strip() if len(temp_val) > 1 else "void",
       }
 
     return template

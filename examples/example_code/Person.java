@@ -1,10 +1,15 @@
-abstract class Person implements Auth {
+abstract class Person {
 
+	private int id;
 	private String name;
-	private Address address;
-	private String email;
 
-	public String getFullName() {}
+	public int getId() {
+ 		return this.id; 
+	}
+
+	public void setId(int id) {
+ 		this.id = id; 
+	}
 
 	public String getName() {
  		return this.name; 
@@ -12,34 +17,6 @@ abstract class Person implements Auth {
 
 	public void setName(String name) {
  		this.name = name; 
-	}
-
-	public Address getAddress() {
- 		return this.address; 
-	}
-
-	public void setAddress(Address address) {
- 		this.address = address; 
-	}
-
-	public String getEmail() {
- 		return this.email; 
-	}
-
-	public void setEmail(String email) {
- 		this.email = email; 
-	}
-
-	 public boolean signIn() {
- 		// ***requires implementation*** 
-	}
-
-	 public boolean signOut() {
- 		// ***requires implementation*** 
-	}
-
-	 public String validatePassword() {
- 		// ***requires implementation*** 
 	}
 
 }
