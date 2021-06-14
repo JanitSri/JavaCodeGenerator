@@ -23,7 +23,7 @@ class JavaCodeGenerator(CodeGeneratorInterface):
         Use the syntax tree to generate code files for the UML class diagrams 
         """
         
-        print("<<< GENERATING FILES >>>")
+        print("<<< GENERATING CODE FILES FROM SYNTAX TREE >>>")
 
         try:
             for _, _class in self.__syntax_tree.items():
@@ -39,11 +39,15 @@ class JavaCodeGenerator(CodeGeneratorInterface):
                     implementation += "implements "
                     implementation += ",".join([self.__syntax_tree[r]['name'] for r in _class['relationships']['implements']]).strip(",")
 
+
+                interface_methods = list()
+                self.get_interface_methods(_class['relationships']['implements'], interface_methods)
+
                 file += self.generate_classes(_class['type'], _class['name'], inheritance, implementation)
                 file += "\n"
                 file += self.generate_properties(_class['properties'])
                 file += "\n"
-                file += self.generate_methods(_class['methods'])
+                file += self.generate_methods(_class['methods'], _class['properties'], _class['type'], interface_methods)
                 file += "}\n" 
                 self.__files.append([_class['name'], file])
 
@@ -56,14 +60,20 @@ class JavaCodeGenerator(CodeGeneratorInterface):
         """
         Generate the class header 
 
+        Parameters:
+            class_type: type of class; 'class', 'abstract', 'interface'
+            class_name: name of class
+            extends: the classes extended by this class
+            implements: the interfaces implemented by this class
+
         Returns:
             class_header: class header string
         """
 
-        type_of_class = "class" if class_type == "class" else class_type
+        type_of_class = "public class" if class_type == "class" else class_type
         type_of_class = class_type + " class" if class_type == "abstract" else type_of_class
 
-        class_header = f"public {type_of_class} {class_name} {extends} {implements}" + " {\n"
+        class_header = f"{type_of_class} {class_name} {extends} {implements}" + " {\n"
         class_header = re.sub(' +', ' ', class_header)
         self.__classes.append(class_header)
         return class_header
@@ -72,12 +82,15 @@ class JavaCodeGenerator(CodeGeneratorInterface):
         """
         Getter for classes
         """
-        print("getting all clases")
+
         return self.__classes
  
     def generate_properties(self, properties):
         """
         Generate properties for the class 
+
+        Parameters:
+            properties: dictionary of properties
 
         Returns:
             properties_string: string of the properties
@@ -88,7 +101,7 @@ class JavaCodeGenerator(CodeGeneratorInterface):
             p = f"\t{_property_value['access']} {_property_value['type']} {_property_value['name']};\n"
             self.__properties.append(p)
             properties_string += p 
-
+ 
         return properties_string
 
     def get_properties(self):
@@ -96,12 +109,17 @@ class JavaCodeGenerator(CodeGeneratorInterface):
         Getter for properties
         """
 
-        print("getting all properties")
         return self.__properties
 
-    def generate_methods(self, methods):
+    def generate_methods(self, methods, properties, class_type, interface_methods):
         """
         Generate methods for the class
+
+        Parameters:
+            methods: dictionary of methods
+            properties: dictionary of properties
+            class_type: type of current class
+            interface_method: methods of implemented interfaces
         
         Returns:
             methods_string: string of the methods 
@@ -110,18 +128,52 @@ class JavaCodeGenerator(CodeGeneratorInterface):
         methods_string = ""
         for _, method_value in methods.items():
             m = f"\t{method_value['access']} {method_value['return_type']} {method_value['name']}() {{}}\n";
+            methods_string += m + "\n"
             self.__methods.append(m)
-            methods_string += m
+
+        # getter and setter methods
+        if class_type == "class" or class_type == "abstract":
+            for _, _property_value in properties.items():
+                if _property_value['access'] == "private":
+                    getter = (f"\tpublic {_property_value['type']} get{_property_value['name'][0].upper() + _property_value['name'][1:]}()"
+                              f" {{\n \t\treturn this.{_property_value['name']}; \n\t}}\n");
+                    methods_string += getter + "\n"
+                    self.__methods.append(getter)
+
+                    setter = (f"\tpublic void set{_property_value['name'].capitalize()}({_property_value['type']} {_property_value['name']})"
+                              f" {{\n \t\tthis.{_property_value['name']} = {_property_value['name']}; \n\t}}\n")
+                    methods_string += setter + "\n"
+                    self.__methods.append(setter)
+            
+            for interface_method in interface_methods:
+                comment = "// ***requires implementation***"
+                m = (f"\t {interface_method['access']} {interface_method['return_type']} {interface_method['name']}()"
+                     f" {{\n \t\t{comment} \n\t}}\n")
+                methods_string += m + "\n"
+                self.__methods.append(m)
 
         return methods_string
 
     def get_methods(self):
         """
         Getter for the methods
+        """        
+
+        return self.__methods
+
+    def get_interface_methods(self, implements, interface_list): 
+        """
+        Get the interface methods that require implementation
+        
+        Parameters:
+            implements: list of interfaces
+            interface_list: list of interface methods
         """
 
-        print("getting all methods")
-        return self.__methods
+        for i in implements:
+            interface_obj = self.__syntax_tree[i]
+            interface_list += interface_obj['methods'].values()
+            self.get_interface_methods(interface_obj['relationships']['implements'], interface_list)
 
     def generate_files(self):
         """
@@ -147,5 +199,4 @@ class JavaCodeGenerator(CodeGeneratorInterface):
         Getter for the files 
         """
 
-        print("getting all files")
         return self.__files

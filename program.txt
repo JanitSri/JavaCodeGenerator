@@ -30,9 +30,10 @@ TODO:
   - add relationships --> DONE
   - check if the relationships are correct --> DONE
   - generate the code --> DONE
-  - add getters and setters for the properties 
-  - add parameters to documentation comments 
+  - add getters and setters for the properties --> DONE
+  - add parameters to documentation comments --> DONE 
   - format spacing for the py files 
+  - test multi-level interface implementation
 
 what to look for in the relationships:
   - start arrow and start fill 
