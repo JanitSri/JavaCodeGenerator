@@ -18,7 +18,6 @@ style_tree = parser_style.convert_to_style_tree()
 # print(json.dumps(style_tree, indent=4))
 json_to_file("examples/simple_class_style_tree.json", style_tree)
 
-
 parser_syntax = SyntaxParser(style_tree)
 syntax_tree = parser_syntax.convert_to_sytax_tree()
 #  print(json.dumps(syntax_tree, indent=4))

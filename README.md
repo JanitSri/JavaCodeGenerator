@@ -14,4 +14,4 @@
     <img src="./github_assets/simple_class_diagram.jpg" width="400" height="400" alt="drawio_logo"/>
 </div>
 
-### check examples/example_code for output of the above diagram
+### check examples/ folder for output of style tree, syntax tree and code for the above diagram
