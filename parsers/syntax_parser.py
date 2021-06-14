@@ -31,7 +31,7 @@ class SyntaxParser:
       for key, value in cells.items():
         
         if value['parent_id'] in relationships.keys() or "endArrow" in value['style'].keys():  
-          # skip the label for replationships
+          # skip the label for relationships
           continue
 
         if value['parent_id'] == parent and value['style']['type'].lower() == 'swimlane' or value['style']['type'].lower() == 'html':
@@ -61,7 +61,7 @@ class SyntaxParser:
   
   def _tree_template(self, main_cell):
     """
-    Create the template thta will house each cell
+    Create the template that will house each cell
 
     Parameters:
       main_cell: the starting, parent cell
@@ -120,6 +120,9 @@ class SyntaxParser:
     template = dict()
 
     for val in values:
+      if len(val) == 0:
+        continue 
+
       _id += 1
 
       val = val.strip()
@@ -150,6 +153,9 @@ class SyntaxParser:
     template = dict()
 
     for val in values:
+      if len(val) == 0:
+        continue 
+
       _id += 1
 
       val = val.strip()

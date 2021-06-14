@@ -1,4 +1,4 @@
-interface Auth {
+interface Auth implements ServerRequest {
 
 	private String userName;
 	public String password;

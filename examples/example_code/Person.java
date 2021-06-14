@@ -38,4 +38,8 @@ abstract class Person implements Auth {
  		// ***requires implementation*** 
 	}
 
+	 public String validatePassword() {
+ 		// ***requires implementation*** 
+	}
+
 }
