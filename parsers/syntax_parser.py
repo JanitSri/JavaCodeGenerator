@@ -217,7 +217,3 @@ class SyntaxParser:
       else: 
         # aggregation 
         target_cell['relationships']['aggregation'] += [source]        
-
-
-    
-

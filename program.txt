@@ -28,8 +28,11 @@ TODO:
   - add HTML support in the syntax tree parser --> DONE
   - determine if class, interface or abstract --> DONE
   - add relationships --> DONE
-  - check if the relationships are correct
-  - generate the code
+  - check if the relationships are correct --> DONE
+  - generate the code --> DONE
+  - add getters and setters for the properties 
+  - add parameters to documentation comments 
+  - format spacing for the py files 
 
 what to look for in the relationships:
   - start arrow and start fill 
