@@ -11,7 +11,7 @@
 ### Generate Java code from [draw.io](https://draw.io/) UML class diagrams
 
 <div style="display: inline-block">
-    <img src="./github_assets/simple_class_diagram.jpg" width="300" height="300" alt="drawio_logo"/>
+    <img src="./github_assets/simple_class_diagram.jpg" width="400" height="400" alt="drawio_logo"/>
 </div>
 
 ### check examples/example_code for output of the above diagram
